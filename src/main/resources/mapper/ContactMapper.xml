@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.anxing.anxingservice.mapper.ContactMapper">
+
+    <resultMap id="ContactMap" type="com.anxing.anxingservice.model.Contact">
+        <id column="id" jdbcType="INTEGER" property="id" />
+        <result column="user_id" jdbcType="INTEGER" property="user_id" />
+        <result column="name" jdbcType="VARCHAR" property="name" />
+        <result column="phoneNumber" jdbcType="INTEGER" property="phoneNumber" />
+        <!--<association property="user" javaType="com.anxing.anxingservice.model.User">-->
+            <!--<id column="user_id" jdbcType="INTEGER" property="id" />-->
+            <!--<result column="openid" jdbcType="VARCHAR" property="openid" />-->
+        <!--</association>-->
+    </resultMap>
+
+    <select id="getAll" resultMap="ContactMap">
+        SELECT * FROM `contact`
+    </select>
+
+    <select id="getContactByUser_id" resultMap="ContactMap">
+        SELECT * FROM `contact`
+        WHERE user_id = #{user_id}
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO `contact` (user_id, name, phoneNumber)
+        VALUES (#{user_id}, #{name}, #{phoneNumber})
+    </insert>
+
+    <delete id="delete">
+        DELETE FROM `contact`
+        WHERE user_id = #{user_id} AND name = #{name} AND phoneNumber = #{phoneNumber}
+    </delete>
+
+</mapper>
