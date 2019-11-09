@@ -2,10 +2,7 @@ package com.anxing.anxingservice.controller;
 
 import com.anxing.anxingservice.service.LocationService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -14,8 +11,8 @@ public class LocationController {
     @Autowired
     private LocationService locationService;
 
-    @GetMapping("/location")
-    public List<Integer> getLocationFrequency(String[] longitude, String[] latitude) {
+    @PutMapping("/frequency/{longitude}/{latitude}")
+    public int getLocationFrequency(@PathVariable("longitude") String longitude,@PathVariable("latitude") String latitude) {
         return locationService.getFrequency(longitude, latitude);
     }
 

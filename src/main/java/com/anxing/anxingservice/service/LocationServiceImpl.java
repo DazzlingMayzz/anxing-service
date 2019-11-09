@@ -16,17 +16,14 @@ public class LocationServiceImpl implements LocationService {
     private LocationRepository locationRepository;
 
     @Override
-    public List<Integer> getFrequency(String[] longitude, String[] latitude) {
-        ArrayList<Integer> frequency = new ArrayList<>();
-        for (int i = 0; i < longitude.length; i++) {
-            if (locationRepository.findByLatitudeAndLongitude(latitude[i], longitude[i]) != null) {
-                frequency.add(locationRepository.findByLatitudeAndLongitude(latitude[i], longitude[i]).getFrequency());
-            } else {
-                createLocation(longitude[i], latitude[i]);
-            }
-            ;
+    public int getFrequency(String longitude, String latitude) {
+        if (locationRepository.findByLatitudeAndLongitude(longitude, latitude)!=null){
+            Location location = locationRepository.findByLatitudeAndLongitude(longitude, latitude);
+            return location.getFrequency();
+        }else{
+            Location newLocation = createLocation(longitude, latitude);
+            return newLocation.getFrequency();
         }
-        return frequency;
     }
 
     @Override
@@ -52,6 +49,4 @@ public class LocationServiceImpl implements LocationService {
         // System.out.println(newLocation);
         return locationRepository.save(newLocation);
     }
-
-
 }
